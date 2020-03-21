@@ -30,6 +30,7 @@
 package android.util;
 
 import android.content.Context;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import java.lang.reflect.Constructor;
@@ -146,7 +147,8 @@ public class BoostFramework {
             }
         }
         catch(Exception e) {
-            Log.e(TAG,"BoostFramework() : Exception_2 = " + e);
+            if (DEBUG) Log.e(TAG,"BoostFramework() : Exception_2 = " + e);
+            mPerf = 1;
         }
     }
 
@@ -408,7 +410,7 @@ public class BoostFramework {
                 Object retVal = sPerfGetPropFunc.invoke(mPerf, prop_name, def_val);
                 ret = (String)retVal;
             }else {
-                ret = def_val;
+                ret = SystemProperties.get(prop_name, def_val);
             }
         } catch(Exception e) {
             if (DEBUG) Log.e(TAG,"Exception " + e);
